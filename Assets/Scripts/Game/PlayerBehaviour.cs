@@ -106,11 +106,19 @@ using UnityEngine;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            if(collision.gameObject.layer == 6)
+        {
+            foreach (ContactPoint2D point in collision.contacts)
+            {
+                if(point.point.y > transform.position.y - (_collider.size.y / 4)) { GameManager.Instance.GameOverEvent.Invoke();return; }
+            }
+        }
             if (collision.gameObject.tag == "Underneath collider" && !GameManager.Instance.GameOver) { GameManager.Instance.GameOverEvent.Invoke(); }
 
         }
         public void OnGameOver()
-    { 
+    {
+        _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             _animator.SetTrigger("GameOver");
             audioManager.PlaySound("Death");
         }
