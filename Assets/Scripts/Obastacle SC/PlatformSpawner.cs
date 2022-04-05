@@ -70,7 +70,7 @@ public class PlatformSpawner : MonoBehaviour
             SelectedObj.transform.parent = LayerObj.transform;
         }
         PreviousHigh = hight;
-        //GenerateCoin(SelectedObj);
+        GenerateCoin(SelectedObj);
     }
 
     private void GenerateCoin(GameObject selectedObj)
@@ -79,9 +79,8 @@ public class PlatformSpawner : MonoBehaviour
         if (coin == 1)
         {
             SpriteRenderer spriterend = selectedObj.GetComponent<SpriteRenderer>();
-            float Xrange = (spriterend.size.x / 2f) + 2f;
-            float Yrange = selectedObj.transform.position.y + (spriterend.size.y / 2) + 1.5f;
-            var newObj = Instantiate(CoinPre, new Vector3(transform.position.x + Random.Range(-Xrange, Xrange), Yrange + Random.Range(0, 4f), 0), Quaternion.identity);
+            float Xrange = 2f;
+            var newObj = Instantiate(CoinPre, new Vector3(transform.position.x + Random.Range(-Xrange, Xrange), Random.Range(0, 2f), 0), Quaternion.identity);
             newObj.transform.parent = selectedObj.transform;
         }
 

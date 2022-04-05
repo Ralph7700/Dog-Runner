@@ -87,10 +87,10 @@ public class GameManager : MonoBehaviour
         GameOver = true;
         StartCoroutine(StopGame());
         player.OnGameOver();
-        if (Score > PlayFabManager.Instance.HighScore)
-        {
-            PlayFabManager.Instance.UploadHighScore(Score);
-        }
+        //if (Score > PlayFabManager.Instance.HighScore)
+        //{
+        //    PlayFabManager.Instance.UploadHighScore(Score);
+        //}
     }
     public void PlayClick() => FindObjectOfType<AudioManager>().PlaySound("Click");
 

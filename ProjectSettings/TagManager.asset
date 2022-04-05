@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Underneath collider
+  - Arrow
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Coin
   - 
   - 
   - 
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: New Layer 5
     uniqueID: 3047964103
+    locked: 0
+  - name: UI
+    uniqueID: 1025116595
     locked: 0

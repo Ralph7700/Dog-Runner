@@ -31,7 +31,7 @@ using UnityEngine;
             _rigidBody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<CapsuleCollider2D>();
             _animator = GetComponent<Animator>();
-
+        audioManager.PlaySound("Run");
         }
 
 
@@ -40,12 +40,12 @@ using UnityEngine;
             if (isGrounded && !GameManager.Instance.GameOver)
             {
 
-                if (!GameManager.Instance.GameOver && Timer >= FootstepTime)
-                {
-                    audioManager.PlaySound("Run");
-                    Timer = 0f;
-                }
-                else Timer += Time.deltaTime;
+                //if (!GameManager.Instance.GameOver && Timer >= FootstepTime)
+                //{
+                //    audioManager.PlaySound("Run");
+                //    Timer = 0f;
+                //}
+                //else Timer += Time.deltaTime;
 
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
                 {
@@ -64,6 +64,7 @@ using UnityEngine;
         {
             _rigidBody.AddForce(new Vector2(0, jumpHight), ForceMode2D.Impulse);
             _animator.SetTrigger("Jump");
+            audioManager.StopSound("Run");
             audioManager.PlaySound("Jump");
         }
         void JumpPhysics()
@@ -81,14 +82,15 @@ using UnityEngine;
         {
             if (collision.gameObject.layer == 6)
             {
-                if (!isGrounded) audioManager.PlaySound("Land");
+            if (!isGrounded && !GameManager.Instance.GameOver) audioManager.PlaySound("Run");
                 isGrounded = true;
                 _animator.SetBool("IsGrounded", true);
+               
             }
             else if (collision.gameObject.layer == 7)
             {
-                GameManager.Instance.AddScore(5);
-                audioManager.PlaySound("Coin");
+                //GameManager.Instance.AddScore(5);
+                //audioManager.PlaySound("Coin");
                 Destroy(collision.gameObject);
             }
         }
@@ -107,18 +109,24 @@ using UnityEngine;
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if(collision.gameObject.layer == 6)
-        {
+                {
             foreach (ContactPoint2D point in collision.contacts)
             {
-                if(point.point.y > transform.position.y - (_collider.size.y / 4)) { GameManager.Instance.GameOverEvent.Invoke();return; }
+                if (point.point.y > transform.position.y) { audioManager.PlaySound("Collision"); GameManager.Instance.GameOverEvent.Invoke(); break; }
             }
         }
-            if (collision.gameObject.tag == "Underneath collider" && !GameManager.Instance.GameOver) { GameManager.Instance.GameOverEvent.Invoke(); }
-
+            if (collision.gameObject.tag == "Underneath collider" && !GameManager.Instance.GameOver) { audioManager.PlaySound("Fall"); GameManager.Instance.GameOverEvent.Invoke(); }
+            if(collision.gameObject.tag == "Arrow")
+        {
+            audioManager.PlaySound("ArrowHit");
+            collision.gameObject.GetComponent<MidgroundBehaviour>().enabled = false;
+            collision.gameObject.transform.parent = transform;
+            GameManager.Instance.GameOverEvent.Invoke();
+        }
         }
         public void OnGameOver()
-    {
-        _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        {
+            _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             _animator.SetTrigger("GameOver");
             audioManager.PlaySound("Death");
         }
