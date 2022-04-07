@@ -21,7 +21,7 @@ public class ArrowSpawner : MonoBehaviour
         else
         {
             timer = 0;
-            time = Random.Range(MinTime, Maxtime);
+            time = Random.Range(MinTime, Maxtime)/GameManager.Instance.speedMultiplier;
             Instantiate(Arrow, new Vector3(transform.position.x,Player.transform.position.y,0), Arrow.transform.rotation);
             AudioManager.Instance.PlaySound("ArrowShot");
         }

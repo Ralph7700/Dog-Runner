@@ -28,6 +28,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3216134719751171751, guid: 10776db6c64e2b84d95fc7131e074eb2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216134719751171751, guid: 10776db6c64e2b84d95fc7131e074eb2, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -77,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 4edb76a93eb99fb4aa058fb8f79e6125, type: 3}
     - target: {fileID: 8546550029610558649, guid: 10776db6c64e2b84d95fc7131e074eb2, type: 3}
       propertyPath: m_Name
-      value: Obstacle Prefab (2)
+      value: Obstacle Prefab (2) Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10776db6c64e2b84d95fc7131e074eb2, type: 3}

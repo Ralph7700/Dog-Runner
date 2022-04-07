@@ -37,20 +37,20 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
             s.source.playOnAwake = s.AwakePlay;
         }
-        //PlaySound("Music");
+        PlaySound("Music");
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //if (scene.buildIndex == 0)
-        //{
-        //    if (isMuted) GameObject.Find("Mute Icon").GetComponent<Image>().sprite = Muted;
+        if (scene.buildIndex == 0)
+        {
+            if (isMuted) GameObject.Find("Mute Icon").GetComponent<Image>().sprite = Muted;
 
-        //    StartCoroutine(VolumeDown(sounds[5].source));
-        //}
-        //if (scene.buildIndex == 1)
-        //{
-        //    StartCoroutine(VolumeUp(sounds[5].source));
-        //}
+            StartCoroutine(VolumeDown(sounds[8].source));
+        }
+        if (scene.buildIndex == 1)
+        {
+            StartCoroutine(VolumeUp(sounds[8].source));
+        }
 
     }
     public void MuteMusic()
@@ -58,12 +58,12 @@ public class AudioManager : MonoBehaviour
         if (isMuted)
         {
             PlaySound("Music");
-            GameObject.Find("Mute Icon").GetComponent<Image>().sprite = UnMuted;
+            GameObject.Find("Mute Icon").GetComponent<Image>().color = new Color(1,1,1,1);
         }
         else
         {
             StopSound("Music");
-            GameObject.Find("Mute Icon").GetComponent<Image>().sprite = Muted;
+            GameObject.Find("Mute Icon").GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
 
         }
         isMuted = !isMuted;
@@ -82,22 +82,22 @@ public class AudioManager : MonoBehaviour
     }
     IEnumerator VolumeUp(AudioSource sound)
     {
-        while (sound.volume < 0.9)
+        while (sound.volume < 0.25)
         {
-            sound.volume = Mathf.Lerp(sound.volume, 1f, soundSpeed);
+            sound.volume = Mathf.Lerp(sound.volume, .3f, soundSpeed);
             yield return null;
         }
-        sound.volume = 1f;
+        sound.volume = .3f;
         yield return null;
     }
     IEnumerator VolumeDown(AudioSource sound)
     {
-        while (sound.volume > 0.4f)
+        while (sound.volume > 0.1f)
         {
-            sound.volume = Mathf.Lerp(sound.volume, 0.3f, soundSpeed);
+            sound.volume = Mathf.Lerp(sound.volume, 0.05f, soundSpeed);
             yield return null;
         }
-        sound.volume = 0.3f;
+        sound.volume = 0.05f;
         yield return null;
     }
 }

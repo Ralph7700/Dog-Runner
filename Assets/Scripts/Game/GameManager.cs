@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         else Destroy(gameObject);
-        //playfab = FindObjectOfType<PlayFabManager>().GetComponent<PlayFabManager>();
+        playfab = FindObjectOfType<PlayFabManager>().GetComponent<PlayFabManager>();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 45;
     }
@@ -87,10 +87,10 @@ public class GameManager : MonoBehaviour
         GameOver = true;
         StartCoroutine(StopGame());
         player.OnGameOver();
-        //if (Score > PlayFabManager.Instance.HighScore)
-        //{
-        //    PlayFabManager.Instance.UploadHighScore(Score);
-        //}
+        if (Score > PlayFabManager.Instance.HighScore)
+        {
+            PlayFabManager.Instance.UploadHighScore(Score);
+        }
     }
     public void PlayClick() => FindObjectOfType<AudioManager>().PlaySound("Click");
 
@@ -99,14 +99,16 @@ public class GameManager : MonoBehaviour
         ScaleSaver = Time.timeScale;
         Time.timeScale = 0;
         PausePanel.SetActive(true);
+        FindObjectOfType<AudioManager>().StopSound("Run");
+
     }
-    public void UnPause() => Time.timeScale = ScaleSaver;
+    public void UnPause() { Time.timeScale = ScaleSaver; PausePanel.SetActive(false); }
     public void Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     public void GoTMenu() => SceneManager.LoadScene(0);
 
     IEnumerator StopGame()
     {
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(3);
         Time.timeScale = 0;
     }
 }

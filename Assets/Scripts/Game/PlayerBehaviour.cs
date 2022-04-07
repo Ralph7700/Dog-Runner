@@ -13,8 +13,6 @@ using UnityEngine;
         private float jumpHight;
         [SerializeField] private float FootstepTime;
         [SerializeField]
-        float Timer = 0;
-        [SerializeField]
         private bool isGrounded;
         private AudioManager audioManager;
 
@@ -39,13 +37,6 @@ using UnityEngine;
         {
             if (isGrounded && !GameManager.Instance.GameOver)
             {
-
-                //if (!GameManager.Instance.GameOver && Timer >= FootstepTime)
-                //{
-                //    audioManager.PlaySound("Run");
-                //    Timer = 0f;
-                //}
-                //else Timer += Time.deltaTime;
 
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
                 {
@@ -89,8 +80,8 @@ using UnityEngine;
             }
             else if (collision.gameObject.layer == 7)
             {
-                //GameManager.Instance.AddScore(5);
-                //audioManager.PlaySound("Coin");
+                GameManager.Instance.AddScore(5);
+                audioManager.PlaySound("Coin");
                 Destroy(collision.gameObject);
             }
         }
@@ -129,6 +120,7 @@ using UnityEngine;
             _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             _animator.SetTrigger("GameOver");
             audioManager.PlaySound("Death");
-        }
+            audioManager.StopSound("Run");
+    }
     }
 
